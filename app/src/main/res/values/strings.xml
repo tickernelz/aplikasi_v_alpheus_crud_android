@@ -6,8 +6,19 @@
     <string name="nav_header_subtitle">Name</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="home_subheader">Welcome to Alpheus\'s Store! Shopping is the best theraphy^^</string>
+    <string name="home_description">Welcome dears! V Alpheus\'s Store telah ada semenjak tahun 2018 ya dears, V Alpheus\'s Store menyediakan produk - produk berkelas seperti Parfum, Baju, Sepatu, Tas, Sepatu, Accessories serta Make Up dari brand ternama yang terkenal di dunia yaitu Brand Zara, Balenciaga, Gucci, YSL, Dior, Celine, Chanel, Louis Vuitton, Prada, Nike, Hermes dan Bvlgari. Silahkan cek produk yang tersedia di website ini. Selamat berbelanja di V Alpheus\'s Store yaa!</string>
+    <string name="home_data_header">Data Produk Tersedia</string>
+    <string name="home_data_subheader">Belum ada data yang tersedia</string>
+    <string name="lorem_ipsum">Lorem Ipsum</string>
+    <string name="kategori">Kategori:</string>
+    <string name="placeholder">[placeholder]</string>
+    <string name="ukuran">Ukuran:</string>
+    <string name="warna">Warna:</string>
+    <string name="satuan">Satuan:</string>
+    <string name="harga">Harga:</string>
+    <string name="stok">Stok:</string>
 </resources>
