@@ -3,6 +3,7 @@ package upr.uas.vivi;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     // Passing each menu ID as a set of Ids because each
     // menu should be considered as top level destinations.
     mAppBarConfiguration =
-        new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_login)
+        new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_login, R.id.nav_brand)
             .setOpenableLayout(drawer)
             .build();
     NavController navController =
@@ -67,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
               TextView nav_header_subtitle_tv = findViewById(R.id.nav_header_subtitle_tv);
               NavigationView navigationView = findViewById(R.id.nav_view);
               Menu menu = navigationView.getMenu();
-              //                      MenuItem nav_bus = menu.findItem(R.id.nav_bus);
+              MenuItem nav_brand = menu.findItem(R.id.nav_brand);
               //                      MenuItem nav_penumpang = menu.findItem(R.id.nav_penumpang);
               if (db.checkIsLogin(user)) {
-                //                        nav_bus.setEnabled(true);
+                nav_brand.setEnabled(true);
                 //                        nav_penumpang.setEnabled(true);
                 nav_header_subtitle_tv.setText("Welcome " + db.getName(user));
               } else {

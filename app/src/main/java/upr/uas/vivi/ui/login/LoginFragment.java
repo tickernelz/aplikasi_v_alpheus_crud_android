@@ -3,6 +3,7 @@ package upr.uas.vivi.ui.login;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -60,7 +61,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
       NavigationView navigationView =
           Objects.requireNonNull(requireActivity().findViewById(R.id.nav_view));
       Menu menu = navigationView.getMenu();
-      //      MenuItem nav_bus = menu.findItem(R.id.nav_bus);
+      MenuItem nav_brand = menu.findItem(R.id.nav_brand);
       //      MenuItem nav_penumpang = menu.findItem(R.id.nav_penumpang);
       DBHandler db = new DBHandler(requireContext());
       User user = new User();
@@ -68,7 +69,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
       user.setPassword(password);
       user.setIsLogin(1);
       if (db.checkIsLogin(user)) {
-        //        nav_bus.setEnabled(false);
+        nav_brand.setEnabled(false);
         //        nav_penumpang.setEnabled(false);
         user.setIsLogin(0);
         db.updateIsLogin(user);
@@ -79,7 +80,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         Snackbar.make(requireView(), "Logout berhasil", Snackbar.LENGTH_SHORT).show();
       } else {
         if (db.checkUser(user)) {
-          //          nav_bus.setEnabled(true);
+          nav_brand.setEnabled(true);
           //          nav_penumpang.setEnabled(true);
           editText_username.setEnabled(false);
           editText_password.setEnabled(false);
