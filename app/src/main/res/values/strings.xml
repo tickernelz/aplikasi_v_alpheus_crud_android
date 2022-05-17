@@ -37,4 +37,15 @@
     <string name="nama_colon">"Nama: "</string>
     <string name="delete">Delete</string>
     <string name="brand">Brand</string>
+    <string name="ukuran">Ukuran</string>
+    <string name="warna">Warna</string>
+    <string name="satuan">Satuan</string>
+    <string name="harga">Harga</string>
+    <string name="stok">Stok</string>
+    <string name="kode_brand">Kode Brand</string>
+    <string name="kode_produk">Kode Produk</string>
+    <string name="produk_list">Produk List</string>
+    <string name="nama_brand_colon">"Nama Brand: "</string>
+    <string name="nama_produk_colon">"Nama Produk: "</string>
+    <string name="produk">Produk</string>
 </resources>

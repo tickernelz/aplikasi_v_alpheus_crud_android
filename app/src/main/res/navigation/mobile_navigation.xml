@@ -20,4 +20,9 @@
         android:name="upr.uas.vivi.ui.brand.BrandFragment"
         android:label="@string/brand"
         tools:layout="@layout/fragment_brand" />
+    <fragment
+        android:id="@+id/nav_produk"
+        android:name="upr.uas.vivi.ui.produk.ProdukFragment"
+        android:label="@string/produk"
+        tools:layout="@layout/fragment_produk" />
 </navigation>

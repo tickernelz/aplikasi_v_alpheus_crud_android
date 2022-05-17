@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import upr.uas.vivi.db.params.BrandParams;
+import upr.uas.vivi.db.params.ProdukParams;
 import upr.uas.vivi.db.params.UserParams;
 import upr.uas.vivi.object.Brand;
+import upr.uas.vivi.object.Produk;
 import upr.uas.vivi.object.User;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -46,9 +49,35 @@ public class DBHandler extends SQLiteOpenHelper {
           + " TEXT "
           + ")";
 
+  private static final String SQL_CREATE_PRODUK =
+      "CREATE TABLE "
+          + ProdukParams.TABLE_NAME
+          + "("
+          + ProdukParams.KEY_ID
+          + " INTEGER PRIMARY KEY, "
+          + ProdukParams.KEY_KODE_PRODUK
+          + " TEXT, "
+          + ProdukParams.KEY_KODE_BRAND
+          + " TEXT, "
+          + ProdukParams.KEY_NAMA
+          + " TEXT, "
+          + ProdukParams.KEY_UKURAN
+          + " TEXT, "
+          + ProdukParams.KEY_WARNA
+          + " TEXT, "
+          + ProdukParams.KEY_SATUAN
+          + " TEXT, "
+          + ProdukParams.KEY_HARGA
+          + " TEXT, "
+          + ProdukParams.KEY_STOK
+          + " TEXT "
+          + ")";
+
   private static final String SQL_DELETE_USER = "DROP TABLE IF EXISTS " + UserParams.TABLE_NAME;
 
   private static final String SQL_DELETE_BRAND = "DROP TABLE IF EXISTS " + BrandParams.TABLE_NAME;
+
+  private static final String SQL_DELETE_PRODUK = "DROP TABLE IF EXISTS " + ProdukParams.TABLE_NAME;
 
   public DBHandler(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
@@ -58,12 +87,14 @@ public class DBHandler extends SQLiteOpenHelper {
   public void onCreate(SQLiteDatabase db) {
     db.execSQL(SQL_CREATE_USER);
     db.execSQL(SQL_CREATE_BRAND);
+    db.execSQL(SQL_CREATE_PRODUK);
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     db.execSQL(SQL_DELETE_USER);
     db.execSQL(SQL_DELETE_BRAND);
+    db.execSQL(SQL_DELETE_PRODUK);
     onCreate(db);
   }
 
@@ -199,7 +230,7 @@ public class DBHandler extends SQLiteOpenHelper {
         new String[] {String.valueOf(user.getId())});
   }
 
-  // Brand
+  /* Brand */
 
   public boolean insertBrand(String kode, String nama, String kategori) {
     SQLiteDatabase db = this.getWritableDatabase();
@@ -256,5 +287,119 @@ public class DBHandler extends SQLiteOpenHelper {
       brandList.add(brand);
     }
     return brandList;
+  }
+
+  /* Produk */
+
+  public boolean insertProduk(
+      String kode_produk,
+      String kode_brand,
+      String nama,
+      String ukuran,
+      String warna,
+      String satuan,
+      String harga,
+      String stok) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(ProdukParams.KEY_KODE_PRODUK, kode_produk);
+    contentValues.put(ProdukParams.KEY_KODE_BRAND, kode_brand);
+    contentValues.put(ProdukParams.KEY_NAMA, nama);
+    contentValues.put(ProdukParams.KEY_UKURAN, ukuran);
+    contentValues.put(ProdukParams.KEY_WARNA, warna);
+    contentValues.put(ProdukParams.KEY_SATUAN, satuan);
+    contentValues.put(ProdukParams.KEY_HARGA, harga);
+    contentValues.put(ProdukParams.KEY_STOK, stok);
+
+    long result = db.insert(ProdukParams.TABLE_NAME, null, contentValues);
+
+    return result != -1;
+  }
+
+  public boolean updateProduk(
+      int id,
+      String kode_produk,
+      String kode_brand,
+      String nama,
+      String ukuran,
+      String warna,
+      String satuan,
+      String harga,
+      String stok) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(ProdukParams.KEY_KODE_PRODUK, kode_produk);
+    contentValues.put(ProdukParams.KEY_KODE_BRAND, kode_brand);
+    contentValues.put(ProdukParams.KEY_NAMA, nama);
+    contentValues.put(ProdukParams.KEY_UKURAN, ukuran);
+    contentValues.put(ProdukParams.KEY_WARNA, warna);
+    contentValues.put(ProdukParams.KEY_SATUAN, satuan);
+    contentValues.put(ProdukParams.KEY_HARGA, harga);
+    contentValues.put(ProdukParams.KEY_STOK, stok);
+
+    long result =
+        db.update(
+            ProdukParams.TABLE_NAME,
+            contentValues,
+            ProdukParams.KEY_ID + "=?",
+            new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public boolean deleteProduk(int id) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    long result =
+        db.delete(
+            ProdukParams.TABLE_NAME, ProdukParams.KEY_ID + "=?", new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public ArrayList<Produk> getProdukData() {
+    ArrayList<Produk> produkList = new ArrayList<>();
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery("SELECT * FROM " + ProdukParams.TABLE_NAME, null);
+
+    while (cursor.moveToNext()) {
+      int id = cursor.getInt(0);
+      String kode_produk = cursor.getString(1);
+      String kode_brand = cursor.getString(2);
+      String nama = cursor.getString(3);
+      String ukuran = cursor.getString(4);
+      String warna = cursor.getString(5);
+      String satuan = cursor.getString(6);
+      String harga = cursor.getString(7);
+      String stok = cursor.getString(8);
+
+      Produk produk =
+          new Produk(id, kode_produk, kode_brand, nama, ukuran, warna, satuan, harga, stok);
+      produkList.add(produk);
+    }
+    return produkList;
+  }
+
+  public List<String> getKodeBrand() {
+    List<String> list = new ArrayList<>();
+
+    // Select All Query
+    String selectQuery = "SELECT " + BrandParams.KEY_KODE + " FROM " + BrandParams.TABLE_NAME;
+
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null); // selectQuery,selectedArguments
+
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) {
+      do {
+        list.add(cursor.getString(0)); // adding 2nd column data
+      } while (cursor.moveToNext());
+    }
+    // closing connection
+    cursor.close();
+    db.close();
+    // returning lables
+    return list;
   }
 }
