@@ -53,4 +53,15 @@
     <string name="transaksi">Transaksi</string>
     <string name="kode_transaksi">Kode Transaksi</string>
     <string name="jumlah_beli">Jumlah Beli</string>
+    <string name="pembayaran_list">Pembayaran List</string>
+    <string name="kode_transaksi_colon">"Kode Transaksi: "</string>
+    <string name="tanggal_colon">"Tanggal: "</string>
+    <string name="total_pembelian_colon">"Total Pembelian: "</string>
+    <string name="total_bayar_colon">"Total Bayar: "</string>
+    <string name="sisa_bayar_colon">"Sisa Bayar: "</string>
+    <string name="pembayaran">Pembayaran</string>
+    <string name="no_nota">No Nota</string>
+    <string name="tanggal">Tanggal</string>
+    <string name="total_pembelian">Total Pembelian</string>
+    <string name="total_bayar">Total Bayar</string>
 </resources>
