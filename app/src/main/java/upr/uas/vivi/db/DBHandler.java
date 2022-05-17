@@ -11,9 +11,11 @@ import java.util.List;
 
 import upr.uas.vivi.db.params.BrandParams;
 import upr.uas.vivi.db.params.ProdukParams;
+import upr.uas.vivi.db.params.TransaksiParams;
 import upr.uas.vivi.db.params.UserParams;
 import upr.uas.vivi.object.Brand;
 import upr.uas.vivi.object.Produk;
+import upr.uas.vivi.object.Transaksi;
 import upr.uas.vivi.object.User;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -73,11 +75,28 @@ public class DBHandler extends SQLiteOpenHelper {
           + " TEXT "
           + ")";
 
+  private static final String SQL_CREATE_TRANSAKSI =
+      "CREATE TABLE "
+          + TransaksiParams.TABLE_NAME
+          + "("
+          + TransaksiParams.KEY_ID
+          + " INTEGER PRIMARY KEY, "
+          + TransaksiParams.KEY_KODE_TRANSAKSI
+          + " TEXT, "
+          + TransaksiParams.KEY_NAMA_PRODUK
+          + " TEXT, "
+          + TransaksiParams.KEY_JUMLAH
+          + " TEXT "
+          + ")";
+
   private static final String SQL_DELETE_USER = "DROP TABLE IF EXISTS " + UserParams.TABLE_NAME;
 
   private static final String SQL_DELETE_BRAND = "DROP TABLE IF EXISTS " + BrandParams.TABLE_NAME;
 
   private static final String SQL_DELETE_PRODUK = "DROP TABLE IF EXISTS " + ProdukParams.TABLE_NAME;
+
+  private static final String SQL_DELETE_TRANSAKSI =
+      "DROP TABLE IF EXISTS " + TransaksiParams.TABLE_NAME;
 
   public DBHandler(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
@@ -88,6 +107,7 @@ public class DBHandler extends SQLiteOpenHelper {
     db.execSQL(SQL_CREATE_USER);
     db.execSQL(SQL_CREATE_BRAND);
     db.execSQL(SQL_CREATE_PRODUK);
+    db.execSQL(SQL_CREATE_TRANSAKSI);
   }
 
   @Override
@@ -95,6 +115,7 @@ public class DBHandler extends SQLiteOpenHelper {
     db.execSQL(SQL_DELETE_USER);
     db.execSQL(SQL_DELETE_BRAND);
     db.execSQL(SQL_DELETE_PRODUK);
+    db.execSQL(SQL_DELETE_TRANSAKSI);
     onCreate(db);
   }
 
@@ -386,6 +407,89 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // Select All Query
     String selectQuery = "SELECT " + BrandParams.KEY_KODE + " FROM " + BrandParams.TABLE_NAME;
+
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null); // selectQuery,selectedArguments
+
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) {
+      do {
+        list.add(cursor.getString(0)); // adding 2nd column data
+      } while (cursor.moveToNext());
+    }
+    // closing connection
+    cursor.close();
+    db.close();
+    // returning lables
+    return list;
+  }
+
+  /* Transaksi */
+
+  public boolean insertTransaksi(String kode_transaksi, String nama_produk, String jumlah) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(TransaksiParams.KEY_KODE_TRANSAKSI, kode_transaksi);
+    contentValues.put(TransaksiParams.KEY_NAMA_PRODUK, nama_produk);
+    contentValues.put(TransaksiParams.KEY_JUMLAH, jumlah);
+
+    long result = db.insert(TransaksiParams.TABLE_NAME, null, contentValues);
+
+    return result != -1;
+  }
+
+  public boolean updateTransaksi(int id, String kode_transaksi, String nama_produk, String jumlah) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(TransaksiParams.KEY_KODE_TRANSAKSI, kode_transaksi);
+    contentValues.put(TransaksiParams.KEY_NAMA_PRODUK, nama_produk);
+    contentValues.put(TransaksiParams.KEY_JUMLAH, jumlah);
+
+    long result =
+        db.update(
+            TransaksiParams.TABLE_NAME,
+            contentValues,
+            TransaksiParams.KEY_ID + "=?",
+            new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public boolean deleteTransaksi(int id) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    long result =
+        db.delete(
+            TransaksiParams.TABLE_NAME,
+            TransaksiParams.KEY_ID + "=?",
+            new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public ArrayList<Transaksi> getTransaksiData() {
+    ArrayList<Transaksi> transaksiList = new ArrayList<>();
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery("SELECT * FROM " + TransaksiParams.TABLE_NAME, null);
+
+    while (cursor.moveToNext()) {
+      int id = cursor.getInt(0);
+      String kode_transaksi = cursor.getString(1);
+      String nama_produk = cursor.getString(2);
+      String jumlah = cursor.getString(3);
+
+      Transaksi transaksi = new Transaksi(id, kode_transaksi, nama_produk, jumlah);
+      transaksiList.add(transaksi);
+    }
+    return transaksiList;
+  }
+
+  public List<String> getNamaProduk() {
+    List<String> list = new ArrayList<>();
+
+    // Select All Query
+    String selectQuery = "SELECT " + ProdukParams.KEY_NAMA + " FROM " + ProdukParams.TABLE_NAME;
 
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor cursor = db.rawQuery(selectQuery, null); // selectQuery,selectedArguments

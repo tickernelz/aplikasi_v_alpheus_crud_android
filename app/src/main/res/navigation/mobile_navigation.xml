@@ -25,4 +25,9 @@
         android:name="upr.uas.vivi.ui.produk.ProdukFragment"
         android:label="@string/produk"
         tools:layout="@layout/fragment_produk" />
+    <fragment
+        android:id="@+id/nav_transaksi"
+        android:name="upr.uas.vivi.ui.transaksi.TransaksiFragment"
+        android:label="@string/transaksi"
+        tools:layout="@layout/fragment_transaksi" />
 </navigation>

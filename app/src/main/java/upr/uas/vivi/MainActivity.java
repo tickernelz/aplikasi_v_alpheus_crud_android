@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     // menu should be considered as top level destinations.
     mAppBarConfiguration =
         new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_login, R.id.nav_brand, R.id.nav_produk)
+                R.id.nav_home, R.id.nav_login, R.id.nav_brand, R.id.nav_produk, R.id.nav_transaksi)
             .setOpenableLayout(drawer)
             .build();
     NavController navController =
@@ -71,9 +71,11 @@ public class MainActivity extends AppCompatActivity {
               Menu menu = navigationView.getMenu();
               MenuItem nav_brand = menu.findItem(R.id.nav_brand);
               MenuItem nav_produk = menu.findItem(R.id.nav_produk);
+              MenuItem nav_transaksi = menu.findItem(R.id.nav_transaksi);
               if (db.checkIsLogin(user)) {
                 nav_brand.setEnabled(true);
                 nav_produk.setEnabled(true);
+                nav_transaksi.setEnabled(true);
                 nav_header_subtitle_tv.setText("Welcome " + db.getName(user));
               } else {
                 nav_header_subtitle_tv.setText(R.string.login_please);

@@ -22,5 +22,10 @@
             android:enabled="false"
             android:icon="@drawable/ic_menu_produk"
             android:title="@string/produk" />
+        <item
+            android:id="@+id/nav_transaksi"
+            android:enabled="false"
+            android:icon="@drawable/ic_menu_transaksi"
+            android:title="@string/transaksi" />
     </group>
 </menu>

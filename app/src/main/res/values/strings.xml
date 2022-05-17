@@ -48,4 +48,9 @@
     <string name="nama_brand_colon">"Nama Brand: "</string>
     <string name="nama_produk_colon">"Nama Produk: "</string>
     <string name="produk">Produk</string>
+    <string name="transaksi_list">Transaksi List</string>
+    <string name="jumlah_beli_colon">"Jumlah Beli: "</string>
+    <string name="transaksi">Transaksi</string>
+    <string name="kode_transaksi">Kode Transaksi</string>
+    <string name="jumlah_beli">Jumlah Beli</string>
 </resources>
