@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import upr.uas.vivi.db.params.BrandParams;
 import upr.uas.vivi.db.params.ProdukParams;
@@ -363,21 +364,42 @@ public class DBHandler extends SQLiteOpenHelper {
     Cursor cursor = db.rawQuery("SELECT * FROM " + ProdukParams.TABLE_NAME, null);
 
     while (cursor.moveToNext()) {
-      int index = 0;
-      int id = cursor.getInt(index);
-      String kode_produk = cursor.getString(index++);
-      String kode_brand = cursor.getString(index++);
-      String nama = cursor.getString(index++);
-      String ukuran = cursor.getString(index++);
-      String warna = cursor.getString(index++);
-      String satuan = cursor.getString(index++);
-      String harga = cursor.getString(index++);
-      String stok = cursor.getString(index++);
+      int id = cursor.getInt(0);
+      String kode_produk = cursor.getString(1);
+      String kode_brand = cursor.getString(2);
+      String nama = cursor.getString(3);
+      String ukuran = cursor.getString(4);
+      String warna = cursor.getString(5);
+      String satuan = cursor.getString(6);
+      String harga = cursor.getString(7);
+      String stok = cursor.getString(8);
 
       Produk produk =
           new Produk(id, kode_produk, kode_brand, nama, ukuran, warna, satuan, harga, stok);
       produkList.add(produk);
     }
     return produkList;
+  }
+
+  public List<String> getKodeBrand() {
+    List<String> list = new ArrayList<>();
+
+    // Select All Query
+    String selectQuery = "SELECT " + BrandParams.KEY_KODE + " FROM " + BrandParams.TABLE_NAME;
+
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null); // selectQuery,selectedArguments
+
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) {
+      do {
+        list.add(cursor.getString(0)); // adding 2nd column data
+      } while (cursor.moveToNext());
+    }
+    // closing connection
+    cursor.close();
+    db.close();
+    // returning lables
+    return list;
   }
 }
