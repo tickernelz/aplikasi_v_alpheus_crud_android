@@ -27,5 +27,10 @@
             android:enabled="false"
             android:icon="@drawable/ic_menu_transaksi"
             android:title="@string/transaksi" />
+        <item
+            android:id="@+id/nav_pembayaran"
+            android:enabled="false"
+            android:icon="@drawable/ic_menu_pembayaran"
+            android:title="@string/pembayaran" />
     </group>
 </menu>

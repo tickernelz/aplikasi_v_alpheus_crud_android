@@ -30,4 +30,9 @@
         android:name="upr.uas.vivi.ui.transaksi.TransaksiFragment"
         android:label="@string/transaksi"
         tools:layout="@layout/fragment_transaksi" />
+    <fragment
+        android:id="@+id/nav_pembayaran"
+        android:name="upr.uas.vivi.ui.pembayaran.PembayaranFragment"
+        android:label="@string/pembayaran"
+        tools:layout="@layout/fragment_pembayaran" />
 </navigation>
