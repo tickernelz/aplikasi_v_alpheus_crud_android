@@ -18,7 +18,7 @@ public class Brand implements Parcelable {
         }
       };
   private int id;
-  private String nama, kode, kategori;
+  private String kode, nama, kategori;
 
   public Brand(int id, String kode, String nama, String kategori) {
     this.id = id;
