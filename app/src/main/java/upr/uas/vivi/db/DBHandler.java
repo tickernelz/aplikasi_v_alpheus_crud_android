@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import upr.uas.vivi.db.params.BrandParams;
+import upr.uas.vivi.db.params.PembayaranParams;
 import upr.uas.vivi.db.params.ProdukParams;
 import upr.uas.vivi.db.params.TransaksiParams;
 import upr.uas.vivi.db.params.UserParams;
 import upr.uas.vivi.object.Brand;
+import upr.uas.vivi.object.Pembayaran;
 import upr.uas.vivi.object.Produk;
 import upr.uas.vivi.object.Transaksi;
 import upr.uas.vivi.object.User;
@@ -89,6 +91,24 @@ public class DBHandler extends SQLiteOpenHelper {
           + " TEXT "
           + ")";
 
+  private static final String SQL_CREATE_PEMBAYARAN =
+      "CREATE TABLE "
+          + PembayaranParams.TABLE_NAME
+          + "("
+          + PembayaranParams.KEY_ID
+          + " INTEGER PRIMARY KEY, "
+          + PembayaranParams.KEY_NOTA
+          + " TEXT, "
+          + PembayaranParams.KEY_KODE_TRANSAKSI
+          + " TEXT, "
+          + PembayaranParams.KEY_TANGGAL
+          + " TEXT, "
+          + PembayaranParams.KEY_TOTAL_PEMBELIAN
+          + " INTEGER, "
+          + PembayaranParams.KEY_TOTAL_BAYAR
+          + " INTEGER "
+          + ")";
+
   private static final String SQL_DELETE_USER = "DROP TABLE IF EXISTS " + UserParams.TABLE_NAME;
 
   private static final String SQL_DELETE_BRAND = "DROP TABLE IF EXISTS " + BrandParams.TABLE_NAME;
@@ -97,6 +117,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
   private static final String SQL_DELETE_TRANSAKSI =
       "DROP TABLE IF EXISTS " + TransaksiParams.TABLE_NAME;
+
+  private static final String SQL_DELETE_PEMBAYARAN =
+      "DROP TABLE IF EXISTS " + PembayaranParams.TABLE_NAME;
 
   public DBHandler(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
@@ -108,6 +131,7 @@ public class DBHandler extends SQLiteOpenHelper {
     db.execSQL(SQL_CREATE_BRAND);
     db.execSQL(SQL_CREATE_PRODUK);
     db.execSQL(SQL_CREATE_TRANSAKSI);
+    db.execSQL(SQL_CREATE_PEMBAYARAN);
   }
 
   @Override
@@ -116,6 +140,7 @@ public class DBHandler extends SQLiteOpenHelper {
     db.execSQL(SQL_DELETE_BRAND);
     db.execSQL(SQL_DELETE_PRODUK);
     db.execSQL(SQL_DELETE_TRANSAKSI);
+    db.execSQL(SQL_DELETE_PEMBAYARAN);
     onCreate(db);
   }
 
@@ -490,6 +515,104 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // Select All Query
     String selectQuery = "SELECT " + ProdukParams.KEY_NAMA + " FROM " + ProdukParams.TABLE_NAME;
+
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery(selectQuery, null); // selectQuery,selectedArguments
+
+    // looping through all rows and adding to list
+    if (cursor.moveToFirst()) {
+      do {
+        list.add(cursor.getString(0)); // adding 2nd column data
+      } while (cursor.moveToNext());
+    }
+    // closing connection
+    cursor.close();
+    db.close();
+    // returning lables
+    return list;
+  }
+
+  /* Pembayaran */
+
+  public boolean insertPembayaran(
+      String nota, String kode_transaksi, String tanggal, int total_pembelian, int total_bayar) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(PembayaranParams.KEY_NOTA, nota);
+    contentValues.put(PembayaranParams.KEY_KODE_TRANSAKSI, kode_transaksi);
+    contentValues.put(PembayaranParams.KEY_TANGGAL, tanggal);
+    contentValues.put(PembayaranParams.KEY_TOTAL_PEMBELIAN, total_pembelian);
+    contentValues.put(PembayaranParams.KEY_TOTAL_BAYAR, total_bayar);
+
+    long result = db.insert(PembayaranParams.TABLE_NAME, null, contentValues);
+
+    return result != -1;
+  }
+
+  public boolean updatePembayaran(
+      int id,
+      String nota,
+      String kode_transaksi,
+      String tanggal,
+      int total_pembelian,
+      int total_bayar) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(PembayaranParams.KEY_NOTA, nota);
+    contentValues.put(PembayaranParams.KEY_KODE_TRANSAKSI, kode_transaksi);
+    contentValues.put(PembayaranParams.KEY_TANGGAL, tanggal);
+    contentValues.put(PembayaranParams.KEY_TOTAL_PEMBELIAN, total_pembelian);
+    contentValues.put(PembayaranParams.KEY_TOTAL_BAYAR, total_bayar);
+
+    long result =
+        db.update(
+            PembayaranParams.TABLE_NAME,
+            contentValues,
+            PembayaranParams.KEY_ID + "=?",
+            new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public boolean deletePembayaran(int id) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    long result =
+        db.delete(
+            PembayaranParams.TABLE_NAME,
+            PembayaranParams.KEY_ID + "=?",
+            new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public ArrayList<Pembayaran> getPembayaranData() {
+    ArrayList<Pembayaran> pembayaranList = new ArrayList<>();
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery("SELECT * FROM " + PembayaranParams.TABLE_NAME, null);
+
+    while (cursor.moveToNext()) {
+      int id = cursor.getInt(0);
+      String nota = cursor.getString(1);
+      String kode_transaksi = cursor.getString(2);
+      String tanggal = cursor.getString(3);
+      int total_pembelian = cursor.getInt(4);
+      int total_bayar = cursor.getInt(5);
+
+      Pembayaran pembayaran =
+          new Pembayaran(id, nota, kode_transaksi, tanggal, total_pembelian, total_bayar);
+      pembayaranList.add(pembayaran);
+    }
+    return pembayaranList;
+  }
+
+  public List<String> getKodeTransaksi() {
+    List<String> list = new ArrayList<>();
+
+    // Select All Query
+    String selectQuery =
+        "SELECT " + TransaksiParams.KEY_KODE_TRANSAKSI + " FROM " + TransaksiParams.TABLE_NAME;
 
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor cursor = db.rawQuery(selectQuery, null); // selectQuery,selectedArguments

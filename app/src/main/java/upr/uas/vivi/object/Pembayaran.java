@@ -26,15 +26,14 @@ public class Pembayaran implements Parcelable {
       String kode_transaksi,
       String tanggal,
       int total_pembelian,
-      int total_bayar,
-      int sisa_bayar) {
+      int total_bayar) {
     this.id = id;
     this.nota = nota;
     this.kode_transaksi = kode_transaksi;
     this.tanggal = tanggal;
     this.total_pembelian = total_pembelian;
     this.total_bayar = total_bayar;
-    this.sisa_bayar = sisa_bayar;
+    this.sisa_bayar = total_pembelian - total_bayar;
   }
 
   protected Pembayaran(Parcel in) {
