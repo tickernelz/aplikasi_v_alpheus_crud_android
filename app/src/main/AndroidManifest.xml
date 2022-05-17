@@ -25,6 +25,8 @@
         </activity>
         <activity android:name=".crud.brand.CreateBrandActivity" />
         <activity android:name=".crud.brand.UpdateBrandActivity" />
+        <activity android:name=".crud.produk.CreateProdukActivity" />
+        <activity android:name=".crud.produk.UpdateProdukActivity" />
     </application>
 
 </manifest>

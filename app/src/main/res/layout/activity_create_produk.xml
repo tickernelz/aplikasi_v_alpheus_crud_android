@@ -18,15 +18,15 @@
             android:layout_height="wrap_content"
             android:text="@string/kode_produk" />
 
-        <Spinner
-            android:id="@+id/produk_create_kode_sp"
+        <EditText
+            android:id="@+id/produk_create_kode_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/produk_create_kode_produk_ll"
+        android:id="@+id/produk_create_kode_brand_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/produk_create_kode_ll"
@@ -38,7 +38,7 @@
             android:text="@string/kode_brand" />
 
         <Spinner
-            android:id="@+id/produk_create_kode_produk_sp"
+            android:id="@+id/produk_create_kode_brand_sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -48,7 +48,7 @@
         android:id="@+id/produk_create_nama_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/produk_create_kode_produk_ll"
+        android:layout_below="@+id/produk_create_kode_brand_ll"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
