@@ -201,7 +201,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
   // Brand
 
-  public boolean insertBrand(String nama, String kode, String kategori) {
+  public boolean insertBrand(String kode, String nama, String kategori) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues contentValues = new ContentValues();
     contentValues.put(BrandParams.KEY_KODE, kode);
@@ -213,7 +213,7 @@ public class DBHandler extends SQLiteOpenHelper {
     return result != -1;
   }
 
-  public boolean updateBrand(int id, String nama, String kode, String kategori) {
+  public boolean updateBrand(int id, String kode, String nama, String kategori) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues contentValues = new ContentValues();
     contentValues.put(BrandParams.KEY_KODE, kode);
@@ -248,11 +248,11 @@ public class DBHandler extends SQLiteOpenHelper {
 
     while (cursor.moveToNext()) {
       int id = cursor.getInt(0);
-      String nama = cursor.getString(1);
-      String kode = cursor.getString(2);
+      String kode = cursor.getString(1);
+      String nama = cursor.getString(2);
       String kategori = cursor.getString(3);
 
-      Brand brand = new Brand(id, nama, kode, kategori);
+      Brand brand = new Brand(id, kode, nama, kategori);
       brandList.add(brand);
     }
     return brandList;
