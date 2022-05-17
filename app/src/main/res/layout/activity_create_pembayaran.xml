@@ -59,6 +59,10 @@
 
         <EditText
             android:id="@+id/pembayaran_create_tanggal_et"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

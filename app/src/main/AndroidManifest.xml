@@ -29,6 +29,8 @@
         <activity android:name=".crud.produk.UpdateProdukActivity" />
         <activity android:name=".crud.transaksi.CreateTransaksiActivity" />
         <activity android:name=".crud.transaksi.UpdateTransaksiActivity" />
+        <activity android:name=".crud.pembayaran.CreatePembayaranActivity" />
+        <activity android:name=".crud.pembayaran.UpdatePembayaranActivity" />
     </application>
 
 </manifest>

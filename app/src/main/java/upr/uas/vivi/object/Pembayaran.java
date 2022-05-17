@@ -78,24 +78,25 @@ public class Pembayaran implements Parcelable {
     this.tanggal = tanggal;
   }
 
-  public int getTotalPembelian() {
-    return total_pembelian;
+  public String getTotalPembelian() {
+    return String.valueOf(total_pembelian);
   }
 
   public void setTotalPembelian(int total_pembelian) {
     this.total_pembelian = total_pembelian;
   }
 
-  public int getTotalBayar() {
-    return total_bayar;
+  public String getTotalBayar() {
+    return String.valueOf(total_bayar);
   }
 
   public void setTotalBayar(int total_bayar) {
     this.total_bayar = total_bayar;
   }
 
-  public int getSisaBayar() {
-    return sisa_bayar;
+  public String getSisaBayar() {
+    sisa_bayar = total_pembelian - total_bayar;
+    return String.valueOf(sisa_bayar);
   }
 
   public void setSisaBayar() {
