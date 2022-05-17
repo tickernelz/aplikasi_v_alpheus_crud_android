@@ -6,7 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
+import upr.uas.vivi.db.params.BrandParams;
 import upr.uas.vivi.db.params.UserParams;
+import upr.uas.vivi.object.Brand;
 import upr.uas.vivi.object.User;
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -28,7 +32,23 @@ public class DBHandler extends SQLiteOpenHelper {
           + UserParams.KEY_IS_LOGIN
           + " INTEGER DEFAULT 0)";
 
+  private static final String SQL_CREATE_BRAND =
+      "CREATE TABLE "
+          + BrandParams.TABLE_NAME
+          + "("
+          + BrandParams.KEY_ID
+          + " INTEGER PRIMARY KEY, "
+          + BrandParams.KEY_KODE
+          + " TEXT, "
+          + BrandParams.KEY_NAMA
+          + " TEXT, "
+          + BrandParams.KEY_KATEGORI
+          + " TEXT "
+          + ")";
+
   private static final String SQL_DELETE_USER = "DROP TABLE IF EXISTS " + UserParams.TABLE_NAME;
+
+  private static final String SQL_DELETE_BRAND = "DROP TABLE IF EXISTS " + BrandParams.TABLE_NAME;
 
   public DBHandler(Context context) {
     super(context, DB_NAME, null, DB_VERSION);
@@ -37,11 +57,13 @@ public class DBHandler extends SQLiteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase db) {
     db.execSQL(SQL_CREATE_USER);
+    db.execSQL(SQL_CREATE_BRAND);
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     db.execSQL(SQL_DELETE_USER);
+    db.execSQL(SQL_DELETE_BRAND);
     onCreate(db);
   }
 
@@ -175,5 +197,64 @@ public class DBHandler extends SQLiteOpenHelper {
         values,
         UserParams.KEY_ID + "=?",
         new String[] {String.valueOf(user.getId())});
+  }
+
+  // Brand
+
+  public boolean insertBrand(String nama, String kode, String kategori) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(BrandParams.KEY_KODE, kode);
+    contentValues.put(BrandParams.KEY_NAMA, nama);
+    contentValues.put(BrandParams.KEY_KATEGORI, kategori);
+
+    long result = db.insert(BrandParams.TABLE_NAME, null, contentValues);
+
+    return result != -1;
+  }
+
+  public boolean updateBrand(int id, String nama, String kode, String kategori) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(BrandParams.KEY_KODE, kode);
+    contentValues.put(BrandParams.KEY_NAMA, nama);
+    contentValues.put(BrandParams.KEY_KATEGORI, kategori);
+
+    long result =
+        db.update(
+            BrandParams.TABLE_NAME,
+            contentValues,
+            BrandParams.KEY_ID + "=?",
+            new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public boolean deleteBrand(int id) {
+    SQLiteDatabase db = this.getWritableDatabase();
+    long result =
+        db.delete(
+            BrandParams.TABLE_NAME, BrandParams.KEY_ID + "=?", new String[] {String.valueOf(id)});
+
+    db.close();
+    return result != -1;
+  }
+
+  public ArrayList<Brand> getBrandData() {
+    ArrayList<Brand> brandList = new ArrayList<>();
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor cursor = db.rawQuery("SELECT * FROM " + BrandParams.TABLE_NAME, null);
+
+    while (cursor.moveToNext()) {
+      int id = cursor.getInt(0);
+      String nama = cursor.getString(1);
+      String kode = cursor.getString(2);
+      String kategori = cursor.getString(3);
+
+      Brand brand = new Brand(id, nama, kode, kategori);
+      brandList.add(brand);
+    }
+    return brandList;
   }
 }
