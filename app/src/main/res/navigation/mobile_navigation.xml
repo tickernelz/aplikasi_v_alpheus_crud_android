@@ -15,4 +15,9 @@
         android:name="upr.uas.vivi.ui.login.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_brand"
+        android:name="upr.uas.vivi.ui.brand.BrandFragment"
+        android:label="@string/brand"
+        tools:layout="@layout/fragment_brand" />
 </navigation>
