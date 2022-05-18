@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="brand_nama">
+        <item>BALENCIAGA</item>
+        <item>BVLGARI</item>
+        <item>CELINE</item>
+        <item>CHANEL</item>
+        <item>DIOR</item>
+        <item>GUCCI</item>
+        <item>HERMES</item>
+        <item>LOUIS VUITTON</item>
+        <item>NIKE</item>
+        <item>PRADA</item>
+        <item>YSL</item>
+        <item>ZARA</item>
+    </string-array>
+
+</resources>

@@ -10,16 +10,29 @@
         android:name="upr.uas.vivi.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="upr.uas.vivi.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/nav_login"
+        android:name="upr.uas.vivi.ui.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="upr.uas.vivi.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_brand"
+        android:name="upr.uas.vivi.ui.brand.BrandFragment"
+        android:label="@string/brand"
+        tools:layout="@layout/fragment_brand" />
+    <fragment
+        android:id="@+id/nav_produk"
+        android:name="upr.uas.vivi.ui.produk.ProdukFragment"
+        android:label="@string/produk"
+        tools:layout="@layout/fragment_produk" />
+    <fragment
+        android:id="@+id/nav_transaksi"
+        android:name="upr.uas.vivi.ui.transaksi.TransaksiFragment"
+        android:label="@string/transaksi"
+        tools:layout="@layout/fragment_transaksi" />
+    <fragment
+        android:id="@+id/nav_pembayaran"
+        android:name="upr.uas.vivi.ui.pembayaran.PembayaranFragment"
+        android:label="@string/pembayaran"
+        tools:layout="@layout/fragment_pembayaran" />
 </navigation>
