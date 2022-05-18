@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="brand_kategori">
+        <item>Baju</item>
+        <item>Parfum</item>
+        <item>Tas</item>
+        <item>Sepatu</item>
+        <item>Accessories</item>
+        <item>Make Up</item>
+    </string-array>
+
+</resources>
